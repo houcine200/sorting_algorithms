@@ -8,24 +8,32 @@ void swapper(int *a, int *b)
     *b = temp;
 }
 
-int partition(int *array, int low, int high, size_t size) 
+int lomuto_partition(int *array, int low, int high, size_t size)
 {
-    int pivot = array[high]; /* Choose the last element as the pivot */
-    int i = low - 1, j;
+    int pivot = array[high];
+    int i = low - 1;
+    int j;
 
-    for (j = low; j < high; j++) 
+    for (j = low; j <= high - 1; j++)
     {
-        if (array[j] < pivot) 
+        if (array[j] < pivot)
         {
             i++;
-            swapper(&array[i], &array[j]);
+            if (i != j)
+            {
+                swap(&array[i], &array[j]);
+                print_array(array, size);
+            }
         }
     }
 
-    swapper(&array[i + 1], &array[high]);
-    print_array(array, size);
+    if (array[i + 1] != array[high])
+    {
+        swap(&array[i + 1], &array[high]);
+        print_array(array, size);
+    }
 
-    return i + 1;
+    return (i + 1);
 }
 
 void quicksort(int *array, int low, int high, size_t size) 
